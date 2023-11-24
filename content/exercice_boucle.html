@@ -1,0 +1,577 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="fr" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Exercices : boucle conditionnelle &#8212; NSI</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="../_static/translations.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/exercice_boucle';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="next" title="TP : marche aléatoire d’une tortue" href="tp_marche_aleatoire.html" />
+    <link rel="prev" title="Boucle conditionnelle" href="boucle_while.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="fr"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Passer au contenu principal</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">NSI</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="structure_conditionnelle.html">if … elif … else</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exercice_structure.html">Exercices : structure conditionnelle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="boucle_while.html">Boucle conditionnelle</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Exercices : boucle conditionnelle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tp_marche_aleatoire.html">TP : marche aléatoire d’une tortue</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Téléchargez cette page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/content/exercice_boucle.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Télécharger le fichier source"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Imprimer au format PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Mode plein écran"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="clair/sombre" aria-label="clair/sombre" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Recherche" aria-label="Recherche" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Exercices : boucle conditionnelle</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contenu </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercice-1">Exercice 1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercice-2">Exercice 2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercice-3">Exercice 3</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercice-4">Exercice 4</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercice-6">Exercice 6</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="exercices-boucle-conditionnelle">
+<h1>Exercices : boucle conditionnelle<a class="headerlink" href="#exercices-boucle-conditionnelle" title="Lien permanent vers cette rubrique">#</a></h1>
+<section id="exercice-1">
+<h2>Exercice 1<a class="headerlink" href="#exercice-1" title="Lien permanent vers cette rubrique">#</a></h2>
+<p>Indiquer la valeur des variables après exécution du code !</p>
+<ol class="arabic">
+<li><p>Variable <code class="docutils literal notranslate"><span class="pre">a</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</li>
+<li><p>Variable <code class="docutils literal notranslate"><span class="pre">b</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">b</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="k">while</span> <span class="n">b</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">:</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</li>
+<li><p>Variables <code class="docutils literal notranslate"><span class="pre">c</span></code> et <code class="docutils literal notranslate"><span class="pre">d</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">d</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="n">c</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">d</span> <span class="o">+</span> <span class="n">c</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">c</span> <span class="o">-</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</li>
+<li><p>Variable <code class="docutils literal notranslate"><span class="pre">e</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">e</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">while</span> <span class="n">e</span> <span class="o">&lt;=</span> <span class="mi">10</span><span class="p">:</span>
+    <span class="n">e</span> <span class="o">=</span> <span class="n">e</span> <span class="o">+</span> <span class="mi">2</span>
+</pre></div>
+</div>
+</li>
+<li><p>Variable <code class="docutils literal notranslate"><span class="pre">f</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="k">while</span> <span class="n">f</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">f</span> <span class="o">-</span> <span class="mi">3</span>
+</pre></div>
+</div>
+</li>
+<li><p>Variable <code class="docutils literal notranslate"><span class="pre">g</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="k">while</span> <span class="n">g</span> <span class="o">&gt;</span> <span class="mi">20</span><span class="p">:</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">g</span> <span class="o">//</span> <span class="mi">2</span>
+</pre></div>
+</div>
+</li>
+<li><p>Variables <code class="docutils literal notranslate"><span class="pre">h</span></code> et <code class="docutils literal notranslate"><span class="pre">i</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">h</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">while</span> <span class="n">h</span> <span class="o">&lt;=</span> <span class="mi">9999</span><span class="p">:</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="n">i</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</li>
+<li><p>Variables <code class="docutils literal notranslate"><span class="pre">j</span></code> et <code class="docutils literal notranslate"><span class="pre">k</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">j</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">k</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">j</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">2</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="n">k</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</li>
+<li><p>Variables <code class="docutils literal notranslate"><span class="pre">m</span></code> et <code class="docutils literal notranslate"><span class="pre">n</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">m</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">while</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">m</span><span class="o">*</span><span class="mi">1</span><span class="o">/</span><span class="n">n</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">2</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="exercice-2">
+<h2>Exercice 2<a class="headerlink" href="#exercice-2" title="Lien permanent vers cette rubrique">#</a></h2>
+<p>Écrire des boucles conditionnelles pour :</p>
+<ol class="arabic simple">
+<li><p>Afficher dans l’ordre : 8, 7, 6, 5, 4, 3, 2, 1, 0</p></li>
+<li><p>Afficher dans cet ordre : 1, 3, 5, 7, 9, 11</p></li>
+<li><p>Afficher dans cet ordre : 1, 10, 100, 1000, 10000, 100000, 1000000</p></li>
+<li><p>Afficher dans cet ordre : 1, -1, 1, -1, 1, -1, 1, -1, 1</p></li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">Astuce</p>
+<p>Pour afficher sur une même ligne les valeurs avec la fonction <code class="docutils literal notranslate"><span class="pre">print</span></code>, il suffit d’ajouter l’argument <code class="docutils literal notranslate"><span class="pre">end</span> <span class="pre">=</span> <span class="pre">'</span> <span class="pre">'</span></code> à la fonction.</p>
+<p>Par exemple : <code class="docutils literal notranslate"><span class="pre">print(i,</span> <span class="pre">end='</span> <span class="pre">')</span></code>.</p>
+</div>
+</section>
+<section id="exercice-3">
+<h2>Exercice 3<a class="headerlink" href="#exercice-3" title="Lien permanent vers cette rubrique">#</a></h2>
+<p>Le jeu du <strong>plus</strong> ou <strong>moins</strong> consiste à deviner un nombre entier choisi au hasard par la machine entre 1 et 1000. A chaque proposition:</p>
+<ul class="simple">
+<li><p>si on trouve le nombre, on a gagné et le jeu prend fin.</p></li>
+<li><p>si on ne trouve pas le nombre, on reçoit l’information <strong>plus grand</strong> ou <strong>moins grand</strong> et le jeu continue.</p></li>
+</ul>
+<p>On doit écrire un code en Pthon qui modélise ce jeu.</p>
+<ol class="arabic">
+<li><p>Importer le module nécessaire au choix aléatoire d’un nombre entier.</p></li>
+<li><p>Créer 2 variables <code class="docutils literal notranslate"><span class="pre">n</span></code> et <code class="docutils literal notranslate"><span class="pre">rep</span></code>.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">n</span></code> est le nombre à deviner choisi aléatoirement</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rep</span></code> est un booléen qui vaut <code class="docutils literal notranslate"><span class="pre">False</span></code></p></li>
+</ul>
+</li>
+<li><p>La saisie du nombre est enregistrée dans la variable <code class="docutils literal notranslate"><span class="pre">prop</span></code>.</p>
+<p>Elle se réalise avec l’instruction: <code class="docutils literal notranslate"><span class="pre">prop</span> <span class="pre">=</span> <span class="pre">int(input(&quot;proposer</span> <span class="pre">un</span> <span class="pre">nombre</span> <span class="pre">entre</span> <span class="pre">1</span> <span class="pre">et</span> <span class="pre">1000:</span> <span class="pre">&quot;))</span></code></p>
+</li>
+<li><p>Écrire un code qui propose la saisie d’un nombre tant qu’on n’a pas trouvé le nombre à deviner.</p></li>
+</ol>
+</section>
+<section id="exercice-4">
+<h2>Exercice 4<a class="headerlink" href="#exercice-4" title="Lien permanent vers cette rubrique">#</a></h2>
+<p>Sur les figures ci-dessous, on a tracé aléatoirement des cercles dans un carré qui sont tangents aux côtés du carré.</p>
+<p><strong>Avec 20 cercles</strong></p>
+<a class="reference internal image-reference" href="../_images/cercles_aleatoires.png"><img alt="../_images/cercles_aleatoires.png" class="align-center" src="../_images/cercles_aleatoires.png" style="width: 300px;" /></a>
+<p><strong>Avec 100 cercles</strong></p>
+<a class="reference internal image-reference" href="../_images/cercles_aleatoires_100.png"><img alt="../_images/cercles_aleatoires_100.png" class="align-center" src="../_images/cercles_aleatoires_100.png" style="width: 300px;" /></a>
+<p>Le programme doit respecter les contraintes suivantes:</p>
+<ul class="simple">
+<li><p>le centre de chaque cercle est choisi au hasard</p></li>
+<li><p>le rayon de chaque cercle est supérieur à 10</p></li>
+<li><p>le carré à un côté de 400</p></li>
+<li><p>on tracera au moins 20 cercles.</p></li>
+<li><p>la boucle est une boucle <code class="docutils literal notranslate"><span class="pre">while</span></code></p></li>
+</ul>
+</section>
+<section id="exercice-6">
+<h2>Exercice 6<a class="headerlink" href="#exercice-6" title="Lien permanent vers cette rubrique">#</a></h2>
+<p>La Conjecture de syracuse appelée suite de Syracuse calcule une suite de nombres selon leur parité (pair ou impair). On utilisera une file pour stocker les valeurs de nos différentes suites de Syracuse.</p>
+<p>Après avoir lu l’article sur <a class="reference external" href="https://fr.wikipedia.org/wiki/Conjecture_de_Syracuse">wikipedia</a>, nous allons construire différentes fonctions en Python pour calculer les nombres de cette suite.</p>
+<ol class="arabic">
+<li><p>Les nombres de la suite de Syracuse se calcule de la façon suivante:</p>
+<ul class="simple">
+<li><p>on part d’un nombre entier <code class="docutils literal notranslate"><span class="pre">n</span></code></p></li>
+<li><p>si <code class="docutils literal notranslate"><span class="pre">n</span></code> est pair, on le divise par 2 ; <code class="docutils literal notranslate"><span class="pre">n</span></code> prend cette nouvelle valeur</p></li>
+<li><p>si <code class="docutils literal notranslate"><span class="pre">n</span></code> est impair, on le multiplie par 3 et on ajoute 1; <code class="docutils literal notranslate"><span class="pre">n</span></code> prend cette nouvelle valeur</p></li>
+<li><p>Tant que <code class="docutils literal notranslate"><span class="pre">n</span></code> n’est pas égal à 1, on recommence.</p></li>
+</ul>
+<p>Écrire la fonction <code class="docutils literal notranslate"><span class="pre">syracuse</span></code> de paramètre n, nombre entier, qui calcule et affiche les nombres de la suite de syracuse.</p>
+</li>
+<li><p>On associe les nombres de syracuse à la trajectoire d’une feuille morte et on parle du vol de la suite. Trois valeurs symbolisent ce vol : le temps de vol, le temps de vol en altitude et l’altitude maximale.</p>
+<div class="admonition-exemple admonition">
+<p class="admonition-title">Exemple</p>
+<p>On calcule les termes de la suite pour N=129 et détermine les valeurs:</p>
+<ul class="simple">
+<li><p>Le temps de vol pour N=129 est 121.</p></li>
+<li><p>Le temps de vol en altitude pour N=129 est 2.</p></li>
+<li><p>L’altitude maximale pour N=129 est 9232.</p></li>
+</ul>
+</div>
+<ol class="loweralpha simple">
+<li><p>Écrire la fonction <code class="docutils literal notranslate"><span class="pre">temps_de_vol</span></code> de paramètre <code class="docutils literal notranslate"><span class="pre">n</span></code> qui renvoie la valeur associée au temps de vol.</p></li>
+<li><p>Écrire la fonction <code class="docutils literal notranslate"><span class="pre">vol_en_altitude</span></code> de paramètre <code class="docutils literal notranslate"><span class="pre">n</span></code> qui renvoie la valeur associée au temps de vol en altitude.</p></li>
+<li><p>Écrire la fonction <code class="docutils literal notranslate"><span class="pre">altitude_max</span></code> de paramètre <code class="docutils literal notranslate"><span class="pre">n</span></code> qui renvoie la valeur associée à l’altitude maximale.</p></li>
+</ol>
+</li>
+</ol>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="boucle_while.html"
+       title="page précédente">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">précédent</p>
+        <p class="prev-next-title">Boucle conditionnelle</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="tp_marche_aleatoire.html"
+       title="page suivante">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">suivant</p>
+        <p class="prev-next-title">TP : marche aléatoire d’une tortue</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contenu
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercice-1">Exercice 1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercice-2">Exercice 2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercice-3">Exercice 3</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercice-4">Exercice 4</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercice-6">Exercice 6</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+Par Yannick Chistel
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2023,Yannick Chistel.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
