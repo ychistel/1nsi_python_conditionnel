@@ -1,0 +1,980 @@
+\documentclass[11pt]{article}
+
+    %\usepackage[breakable]{tcolorbox}
+    \usepackage[most]{tcolorbox}
+    \usepackage{lmodern} 
+    \usepackage{parskip} % Stop auto-indenting (to mimic markdown behaviour)
+    
+    \usepackage{iftex}
+    \ifPDFTeX
+    	\usepackage[T1]{fontenc}
+    	\usepackage{mathpazo}
+    \else
+    	\usepackage{fontspec}
+    \fi
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % Maintain compatibility with old templates. Remove in nbconvert 6.0
+    \let\Oldincludegraphics\includegraphics
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionFormat{nocaption}{}
+    \captionsetup{format=nocaption,aboveskip=0pt,belowskip=0pt}
+
+    \usepackage{float}
+    \floatplacement{figure}{H} % forces figures to be placed at the correct location
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range
+    \makeatletter % fix for old versions of grffile with XeLaTeX
+    \@ifpackagelater{grffile}{2019/11/01}
+    {
+      % Do nothing on new versions
+    }
+    {
+      \def\Gread@@xetex#1{%
+        \IfFileExists{"\Gin@base".bb}%
+        {\Gread@eps{\Gin@base.bb}}%
+        {\Gread@@xetex@aux#1}%
+      }
+    }
+    \makeatother
+    \usepackage[Export]{adjustbox} % Used to constrain images to a maximum size
+    \adjustboxset{max size={0.9\linewidth}{0.9\paperheight}}
+
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    % The default LaTeX title has an obnoxious amount of whitespace. By default,
+    % titling removes some of it. It also provides customization options.
+    \usepackage{titling}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    \usepackage{mathrsfs}
+    
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{cclicenses}
+
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
+
+    % common color for the border for error outputs.
+    \definecolor{outerrorbackground}{HTML}{FFDFDF}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=0.7in,bmargin=0.7in,lmargin=0.7in,rmargin=0.7in}
+        
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatibility definitions
+    \def\gt{>}
+    \def\lt{<}
+    \let\Oldtex\TeX
+    \let\Oldlatex\LaTeX
+    \renewcommand{\TeX}{\textrm{\Oldtex}}
+    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
+    % Document parameters
+    % Document title
+    \title{Opérateurs logiques}
+      \date{Octobre 2021}  
+	%\author{Yannick Chistel}
+    
+\makeatletter         
+\renewcommand\maketitle[1]{
+\hrule\medskip
+{\raggedright % Note the extra {
+\begin{center}
+{\Huge \bfseries \sffamily #1 }\\[4ex] 
+%{\Large  \@author}\\[2ex] 
+%\@date\\[4ex]
+\hrule \bigskip
+\end{center}}} % Note the extra }
+\makeatother    
+
+
+
+\pagestyle{fancy}
+\fancyhead{}
+\renewcommand\headrulewidth{0pt}
+\renewcommand\footrulewidth{1pt}
+\fancyfoot[L]{YC}
+\fancyfoot[C]{\thepage}
+\fancyfoot[R]{\cc-\ccby-\ccnc}
+
+% 
+%\newtcolorbox{exemple}[2][]{
+%    enhanced,
+%    size=fbox,sharp corners,
+%    colback=white,colframe=black,
+%    colbacktitle=black,fonttitle=\bfseries,
+%    attach boxed title to top left={yshift=-3mm,yshifttext=-3mm},
+%    boxed title style={size=small,left=0pt,right=0pt,sharp corners},title=#2,#1}
+
+\newtcolorbox{remarque}[2][]{colback=red!4!white,
+colframe=red!64!black,fonttitle=\bfseries,
+colbacktitle=red!64!black,enhanced,
+attach boxed title to top left={xshift=4mm,yshift=-2mm},
+title=#2,#1}  
+
+
+\newtcolorbox{exemple}[2][]{colback=blue!4!white,
+colframe=blue!64!green,fonttitle=\bfseries,
+colbacktitle=blue!64!green,enhanced,
+attach boxed title to top left={xshift=4mm,yshift=-2mm},
+title=#2,#1}  
+    
+% Pygments definitions
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\@namedef{PY@tok@w}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\@namedef{PY@tok@c}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\@namedef{PY@tok@cp}{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\@namedef{PY@tok@k}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kp}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kt}{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\@namedef{PY@tok@o}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@ow}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\@namedef{PY@tok@nb}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@nf}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@nc}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@nn}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@ne}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\@namedef{PY@tok@nv}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@no}{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\@namedef{PY@tok@nl}{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\@namedef{PY@tok@ni}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\@namedef{PY@tok@na}{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\@namedef{PY@tok@nt}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@nd}{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\@namedef{PY@tok@s}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sd}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@si}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\@namedef{PY@tok@se}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\@namedef{PY@tok@sr}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\@namedef{PY@tok@ss}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@sx}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@m}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@gh}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\@namedef{PY@tok@gu}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\@namedef{PY@tok@gd}{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\@namedef{PY@tok@gi}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\@namedef{PY@tok@gr}{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\@namedef{PY@tok@ge}{\let\PY@it=\textit}
+\@namedef{PY@tok@gs}{\let\PY@bf=\textbf}
+\@namedef{PY@tok@gp}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\@namedef{PY@tok@go}{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\@namedef{PY@tok@gt}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\@namedef{PY@tok@err}{\def\PY@bc##1{{\setlength{\fboxsep}{\string -\fboxrule}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}}
+\@namedef{PY@tok@kc}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kd}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kn}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kr}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@bp}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@fm}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@vc}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@vg}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@vi}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@vm}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@sa}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sb}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sc}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@dl}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@s2}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sh}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@s1}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@mb}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mf}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mh}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mi}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@il}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mo}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@ch}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\@namedef{PY@tok@cm}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\@namedef{PY@tok@cpf}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\@namedef{PY@tok@c1}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\@namedef{PY@tok@cs}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % For linebreaks inside Verbatim environment from package fancyvrb. 
+    \makeatletter
+        \newbox\Wrappedcontinuationbox 
+        \newbox\Wrappedvisiblespacebox 
+        \newcommand*\Wrappedvisiblespace {\textcolor{red}{\textvisiblespace}} 
+        \newcommand*\Wrappedcontinuationsymbol {\textcolor{red}{\llap{\tiny$\m@th\hookrightarrow$}}} 
+        \newcommand*\Wrappedcontinuationindent {3ex } 
+        \newcommand*\Wrappedafterbreak {\kern\Wrappedcontinuationindent\copy\Wrappedcontinuationbox} 
+        % Take advantage of the already applied Pygments mark-up to insert 
+        % potential linebreaks for TeX processing. 
+        %        {, <, #, %, $, ' and ": go to next line. 
+        %        _, }, ^, &, >, - and ~: stay at end of broken line. 
+        % Use of \textquotesingle for straight quote. 
+        \newcommand*\Wrappedbreaksatspecials {% 
+            \def\PYGZus{\discretionary{\char`\_}{\Wrappedafterbreak}{\char`\_}}% 
+            \def\PYGZob{\discretionary{}{\Wrappedafterbreak\char`\{}{\char`\{}}% 
+            \def\PYGZcb{\discretionary{\char`\}}{\Wrappedafterbreak}{\char`\}}}% 
+            \def\PYGZca{\discretionary{\char`\^}{\Wrappedafterbreak}{\char`\^}}% 
+            \def\PYGZam{\discretionary{\char`\&}{\Wrappedafterbreak}{\char`\&}}% 
+            \def\PYGZlt{\discretionary{}{\Wrappedafterbreak\char`\<}{\char`\<}}% 
+            \def\PYGZgt{\discretionary{\char`\>}{\Wrappedafterbreak}{\char`\>}}% 
+            \def\PYGZsh{\discretionary{}{\Wrappedafterbreak\char`\#}{\char`\#}}% 
+            \def\PYGZpc{\discretionary{}{\Wrappedafterbreak\char`\%}{\char`\%}}% 
+            \def\PYGZdl{\discretionary{}{\Wrappedafterbreak\char`\$}{\char`\$}}% 
+            \def\PYGZhy{\discretionary{\char`\-}{\Wrappedafterbreak}{\char`\-}}% 
+            \def\PYGZsq{\discretionary{}{\Wrappedafterbreak\textquotesingle}{\textquotesingle}}% 
+            \def\PYGZdq{\discretionary{}{\Wrappedafterbreak\char`\"}{\char`\"}}% 
+            \def\PYGZti{\discretionary{\char`\~}{\Wrappedafterbreak}{\char`\~}}% 
+        } 
+        % Some characters . , ; ? ! / are not pygmentized. 
+        % This macro makes them "active" and they will insert potential linebreaks 
+        \newcommand*\Wrappedbreaksatpunct {% 
+            \lccode`\~`\.\lowercase{\def~}{\discretionary{\hbox{\char`\.}}{\Wrappedafterbreak}{\hbox{\char`\.}}}% 
+            \lccode`\~`\,\lowercase{\def~}{\discretionary{\hbox{\char`\,}}{\Wrappedafterbreak}{\hbox{\char`\,}}}% 
+            \lccode`\~`\;\lowercase{\def~}{\discretionary{\hbox{\char`\;}}{\Wrappedafterbreak}{\hbox{\char`\;}}}% 
+            \lccode`\~`\:\lowercase{\def~}{\discretionary{\hbox{\char`\:}}{\Wrappedafterbreak}{\hbox{\char`\:}}}% 
+            \lccode`\~`\?\lowercase{\def~}{\discretionary{\hbox{\char`\?}}{\Wrappedafterbreak}{\hbox{\char`\?}}}% 
+            \lccode`\~`\!\lowercase{\def~}{\discretionary{\hbox{\char`\!}}{\Wrappedafterbreak}{\hbox{\char`\!}}}% 
+            \lccode`\~`\/\lowercase{\def~}{\discretionary{\hbox{\char`\/}}{\Wrappedafterbreak}{\hbox{\char`\/}}}% 
+            \catcode`\.\active
+            \catcode`\,\active 
+            \catcode`\;\active
+            \catcode`\:\active
+            \catcode`\?\active
+            \catcode`\!\active
+            \catcode`\/\active 
+            \lccode`\~`\~ 	
+        }
+    \makeatother
+
+    \let\OriginalVerbatim=\Verbatim
+    \makeatletter
+    \renewcommand{\Verbatim}[1][1]{%
+        %\parskip\z@skip
+        \sbox\Wrappedcontinuationbox {\Wrappedcontinuationsymbol}%
+        \sbox\Wrappedvisiblespacebox {\FV@SetupFont\Wrappedvisiblespace}%
+        \def\FancyVerbFormatLine ##1{\hsize\linewidth
+            \vtop{\raggedright\hyphenpenalty\z@\exhyphenpenalty\z@
+                \doublehyphendemerits\z@\finalhyphendemerits\z@
+                \strut ##1\strut}%
+        }%
+        % If the linebreak is at a space, the latter will be displayed as visible
+        % space at end of first line, and a continuation symbol starts next line.
+        % Stretch/shrink are however usually zero for typewriter font.
+        \def\FV@Space {%
+            \nobreak\hskip\z@ plus\fontdimen3\font minus\fontdimen4\font
+            \discretionary{\copy\Wrappedvisiblespacebox}{\Wrappedafterbreak}
+            {\kern\fontdimen2\font}%
+        }%
+        
+        % Allow breaks at special characters using \PYG... macros.
+        \Wrappedbreaksatspecials
+        % Breaks at punctuation characters . , ; ? ! and / need catcode=\active 	
+        \OriginalVerbatim[#1,codes*=\Wrappedbreaksatpunct]%
+    }
+    \makeatother
+
+    % Exact colors from NB
+    \definecolor{incolor}{HTML}{303F9F}
+    \definecolor{outcolor}{HTML}{D84315}
+    \definecolor{cellborder}{HTML}{CFCFCF}
+    \definecolor{cellbackground}{HTML}{F7F7F7}
+    
+    % prompt
+    \makeatletter
+    \newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+    \makeatother
+    \newcommand{\prompt}[4]{
+        {\ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}}
+    }
+    
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+
+    
+
+
+\begin{document}
+    
+    \maketitle{Éléments de base du langage Python}
+    
+
+%    
+%    \hypertarget{base-du-langage-python}{%
+%\section{Base du langage Python}\label{base-du-langage-python}}
+
+    \hypertarget{un-uxe9diteur-et-un-interpruxe9teur}{%
+\section{Un éditeur et un
+interpréteur}\label{un-uxe9diteur-et-un-interpruxe9teur}}
+
+\hypertarget{idle-python}{%
+\subsection{IDLE Python}\label{idle-python}}
+
+Le langage python utilise un \textbf{interpréteur} pour exécuter les
+programmes. C'est lui qui s'ouvre lorsqu'on lance python dans la liste
+des programmes sous le nom \emph{IDLE Python} ou alors depuis un
+terminal par la commande \emph{python}.
+
+\begin{figure}
+\centering
+\includegraphics{img/idle_python.png}
+\caption{IDLE Python}
+\end{figure}
+
+\hypertarget{remarque}{%
+\subsubsection*{Remarque}\label{remarque}}
+
+On reconnaît facilement l'\textbf{interpréteur} car la ligne commence
+toujours par \texttt{\textgreater{}\textgreater{}\textgreater{}}.
+
+Pour écrire les programmes sur plusieurs lignes, on utilise un
+\textbf{éditeur}. Il faut un \textbf{éditeur} qui reconnaît le langage
+python pour que la syntaxe soit colorisée. L'interpréteur dispose d'un
+menu qui permet d'ouvrir l'éditeur par le menu File -\textgreater{} New
+File.
+
+Une nouvelle fenêtre apparait! C'est l'éditeur et c'est dans celle-ci
+qu'on saisira nos programmes.
+
+\begin{figure}
+\centering
+\includegraphics{img/editeur_python.png}
+\caption{Editeur python}
+\end{figure}
+
+Il seront lancés par un appui sur la touche F5 après avoir enregistré
+son fichier dans son espace de travail.
+
+\begin{figure}
+\centering
+\includegraphics{img/idle_python2.png}
+\caption{IDLE Python}
+\end{figure}
+
+    \hypertarget{notebook-jupyter}{%
+\subsection{Notebook JUPYTER}\label{notebook-jupyter}}
+
+Un \textbf{notebook} est une application web qui permet avec un
+navigateur (firefox, chrome, etc) de faire de la programmation en python
+et aussi avec d'autres langages.
+
+La page web propose des cellules pour écrire ses programmes en python.
+
+\begin{figure}
+\centering
+\includegraphics{img/notebook_jupyter.png}
+\caption{Notebook jupyter}
+\end{figure}
+
+\begin{itemize}
+\tightlist
+\item
+  On peut l'utiliser comme client seul qui suppose une installation sur
+  le PC.
+\item
+  On peut l'utiliser sur un serveur. Son principal atout est la
+  centralisation des travaux sur une seule machine qui est accessible
+  dans tout le lycée sur n'importe quel poste.
+\end{itemize}
+
+Un \textbf{notebook} est accessible au lycée depuis un navigateur
+(firefox, chrome, etc.) en saisissant l'adresse
+http://dumont.jupyter.lyc14.ac-caen.fr:31416
+
+L'authentification sur le serveur se fait avec le \textbf{login}
+constitué du \textbf{nom} et \textbf{prénom} accolés, sans espaces, ni
+majuscules, ni caractères accentués.
+
+Le mot de passe est votre date anniversaire au format \emph{JJMMAAAA}.
+
+Il y a aussi un notebook jupyter sur l'ENT. Il est à utiliser plutôt à
+la maison pour afficher les notebooks.
+
+    \hypertarget{la-base-du-langage-python}{%
+\section{La base du langage Python}\label{la-base-du-langage-python}}
+
+\hypertarget{variable-en-python}{%
+\subsection{Variable en python}\label{variable-en-python}}
+
+Une variable est un espace de stockage, un espace mémoire qui va
+recevoir une valeur. Cette valeur est associée au nom de la variable qui
+sera choisi.
+
+La variable peut être déclarée (nommée) par une seule lettre, un mot de
+plusieurs lettres ou une combinaison alphanumérique mais sans commencer
+par un chiffre.
+
+\hypertarget{remarque}{%
+\subsubsection*{Remarque}\label{remarque}}
+
+Un nom donné à une variable doit être facile à comprendre, savoir la
+grandeur qu'elle représente.
+
+\hypertarget{exemple}{%
+\subsubsection*{Exemple}\label{exemple}}
+
+\begin{itemize}
+\tightlist
+\item
+  Une variable qui représente un nombre : \textbf{i}, \textbf{n},
+  \textbf{x}, \textbf{y}, etc
+\item
+  Une variable qui représente une chaine de caractères : \textbf{mot},
+  \textbf{nom}, \textbf{texte}, etc
+\item
+  Deux variables qui représentent des grandeurs similaires peuvent avoir
+  des noms proches mais qui se différencient par un chiffre placé à la
+  fin : \textbf{mot1} et \textbf{mot2} ou \textbf{x\_1} et
+  \textbf{x\_2}, etc
+\end{itemize}
+
+\hypertarget{affectation-dune-variable-en-python}{%
+\subsection{Affectation d'une variable en
+python}\label{affectation-dune-variable-en-python}}
+
+Donner une valeur à une variable est une \textbf{affectation}. En
+\textbf{python}, l'affectation se fait avec le signe mathématique égal
+\textbf{=}.
+
+La signification est donc très différente de celle rencontrée en
+mathématique !
+
+\textbf{En Python :}
+
+\(x=x+2\) signifie que la variable \(x\) est augmentée de 2 en valeur.
+Donc si la variable \(x\) vaut 3, après l'affectation, la variable \(x\)
+vaut 5. Elle est augmentée de 2.
+
+\textbf{En maths :}
+
+\(x=x+2\) est une égalité dans laquelle le nombre \(x\) a la même
+valeur, qu'il soit à gauche ou à droite du signe égal. Dans ce cas
+précis, il n'existe pas de nombre vérifiant l'égalité, donc il n'y a pas
+de solution.
+
+\hypertarget{affectation-simple-et-multiple}{%
+\subsection{Affectation simple et
+multiple}\label{affectation-simple-et-multiple}}
+
+Il existe plusieurs façons d'affecter des valeurs à des variables.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Affectation directe simple :
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{a=4}
+\item
+  \texttt{b=5}
+\item
+  \texttt{c=6}
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Affection indirecte simple :
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{a=3}
+\item
+  \texttt{b=4}
+\item
+  \texttt{c=a+b}
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Affectation en ligne ou multiple :
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{a,b,c=3,4,6} ici \texttt{a=3}, \texttt{b=4} et \texttt{c=6}
+\item
+  \texttt{a=b=c=1} ici \texttt{a=1}, \texttt{b=1} et \texttt{c=1}
+\end{itemize}
+
+    \hypertarget{saisir-et-afficher-des-donnuxe9es-dans-une-variable}{%
+\section{Saisir et afficher des données dans une
+variable}\label{saisir-et-afficher-des-donnuxe9es-dans-une-variable}}
+
+\hypertarget{saisir-avec-input}{%
+\subsection{Saisir avec input}\label{saisir-avec-input}}
+
+Pour saisir au clavier la valeur d'une variable, on utilise la fonction
+\textbf{input}.
+
+\hypertarget{exemple}{%
+\subsubsection*{Exemple}\label{exemple}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{input}\NormalTok{(}\StringTok{"a="}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+La chaine ``a='' est le \textbf{prompt} c'est à dire le message affiché
+pour indiquer la saisie à effectuer.
+
+\textbf{Attention}, ainsi écrit, aucune valeur n'est mémorisée dans une
+variable ! Pour mémoriser la valeur dans une variable, il faut une
+affectation à une variable.
+
+\hypertarget{exemple-1}{%
+\subsubsection*{Exemple}\label{exemple-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a}\OperatorTok{=}\BuiltInTok{input}\NormalTok{(}\StringTok{"a="}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{remarque}{%
+\subsubsection*{Remarque}\label{remarque}}
+
+C'est une chaine de caractères qui est saisie. Si on veut saisir un
+nombre entier ou flottant, il faudra transformer la chaine ``nombre'' en
+nombre avec les fonctions \textbf{int} ou \textbf{float}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a}\OperatorTok{=}\BuiltInTok{input}\NormalTok{(}\StringTok{"a="}\NormalTok{)}
+\NormalTok{a}\OperatorTok{=}\BuiltInTok{int}\NormalTok{(a)}
+
+\CommentTok{\# ou en une seule instruction}
+
+\NormalTok{a}\OperatorTok{=}\BuiltInTok{int}\NormalTok{(}\BuiltInTok{input}\NormalTok{(}\StringTok{"a="}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{afficher-avec-print}{%
+\subsection{Afficher avec print}\label{afficher-avec-print}}
+
+Pour afficher la valeur d'une variable, on utilise simplement la
+fonction \textbf{print}.
+
+\hypertarget{exemple-2}{%
+\subsubsection*{Exemple}\label{exemple-2}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# La valeur contenue dans la variable a est affiché.}
+\BuiltInTok{print}\NormalTok{(}\StringTok{"La variable a vaut :"}\NormalTok{, a)}
+\end{Highlighting}
+\end{Shaded}
+
+    \hypertarget{types-dune-variable-en-python}{%
+\section{Types d'une variable en
+python}\label{types-dune-variable-en-python}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Les variables ont un \textbf{type} différent selon la valeur qui lui
+  est donnée. Au moment de l'affectation, la valeur est stockée en
+  mémoire et python lui attribue un type.
+\item
+  Une variable peut représenter un nombre entier ou à virgule, un
+  booléen, une chaine de caractères ou un groupe de valeurs rassemblées
+  en une liste ou un tableau.
+\item
+  En python, le type d'une variable peut changer selon le contexte. Une
+  variable peut être un nombre puis devenir une chaine de caractères ou
+  inversement.
+\item
+  La fonction ``type'' est une fonction en python qui permet de
+  connaître le \textbf{type} d'une variable.
+\end{enumerate}
+
+\hypertarget{le-type-numuxe9rique}{%
+\subsection{Le type numérique}\label{le-type-numuxe9rique}}
+
+En python, une variable peut désigner un nombre \textbf{entier} ou un
+nombre \textbf{flottant} (nombre réel en mathématiques).
+
+Avec les variables de type numérique, on peut utiliser des opérateurs
+mathématiques comme la somme (+), la différence (-), le produit (*) et
+le quotient (/).
+
+Selon l'opérateur, le résultat peut avoir un type différent des valeurs
+avant le calcul. Par exemple, le quotient de 2 nombres entiers peut
+donner un résultat réel, donc un flottant.
+
+En plus des 4 opérations mathématiques, il existe en Python des
+opérateurs mathématiques tels que:
+
+\begin{longtable}[]{@{}cl@{}}
+\toprule
+Opérateur & Opération mathématique\tabularnewline
+\midrule
+\endhead
+x//y & quotient entier de la division de x par y\tabularnewline
+x\%y & reste entier de la division de x par y\tabularnewline
+abs(x) & valeur absolue de x\tabularnewline
+int(x) & partie entière de x\tabularnewline
+float(x) & conversion de x en flottant\tabularnewline
+x**y & x à la puissance y\tabularnewline
+\bottomrule
+\end{longtable}
+
+    \hypertarget{le-type-booluxe9en}{%
+\subsection{Le type booléen}\label{le-type-booluxe9en}}
+
+Une variable de type \textbf{booléen} prend 2 valeurs possibles :
+\textbf{True} (vrai) ou \textbf{False} (faux).
+
+Ces deux valeurs, True ou False sont aussi notées 1 pour \textbf{True}
+et 0 pour \textbf{False}.
+
+Les opérateurs pour les variables de type booléen sont le ``ET''
+logique, le ``OU'' logique et la négation ``NON''.
+
+En python, ces opérateurs sont ``AND'', ``OR'' et ``NOT''.
+
+On redonne la table de vérité de ces opérations:
+
+\begin{longtable}[]{@{}ccccc@{}}
+\toprule
+x & y & not(x) & x or y & x and y\tabularnewline
+\midrule
+\endhead
+0 & 0 & 1 & 0 & 0\tabularnewline
+0 & 1 & 1 & 1 & 0\tabularnewline
+1 & 0 & 0 & 1 & 0\tabularnewline
+1 & 1 & 0 & 1 & 1\tabularnewline
+\bottomrule
+\end{longtable}
+
+    \hypertarget{le-type-string-ou-chaine-de-caractuxe8res}{%
+\subsection{Le type string ou chaine de
+caractères}\label{le-type-string-ou-chaine-de-caractuxe8res}}
+
+Une variable de type \textbf{string} est une variable dont la valeur est
+constitué de lettres, chiffres, espaces et de tout caractère
+alphanumérique et de symboles.
+
+L'affectation d'une chaîne de caratère à une variable se fait en notant
+la chaine entre guillemets doubles ``\emph{chaine de caratères}'' ou
+simples `\emph{chaine de caratères}'.
+
+Des variables de type string peuvent être réunies par
+\textbf{concaténation}. L'opérateur de concaténation est le \textbf{+}.
+
+\hypertarget{exemple}{%
+\subsubsection*{Exemple}\label{exemple}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Déclaration et affectation des variables txt1 et txt2 de type string:
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  txt1 = ``La vie est belle''
+\item
+  txt2 = `mais cruelle parfois!'
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Concaténation des contenus des variables dans une variable txt:
+  \texttt{txt\ =\ txt1+txt2}
+\end{enumerate}
+
+la variable txt aura pour valeur la chaine : ``La vie est belle mais
+cruelle parfois!''
+
+    \hypertarget{structure-conditionnelle}{%
+\section{Structure conditionnelle}\label{structure-conditionnelle}}
+
+\hypertarget{les-tests}{%
+\subsection{Les tests}\label{les-tests}}
+
+Un test compare des valeurs et renvoie un booléen : \textbf{True} ou
+\textbf{False}
+
+Les opérateurs de comparaison sont:
+
+\begin{itemize}
+\tightlist
+\item
+  \(==\) pour comparer deux valeurs égales : \(a==3\),
+\item
+  \(!=\) pour comparer deux valeurs non égales.
+\item
+  \(<\), \(>\), \(<=\) et \(>=\) pour comparer comme en maths : \(<\),
+  \(>\), \(\leqslant\) et \(\geqslant\).
+\item
+  Les opérateurs NOT, AND et OR peuvent être utilisés dans les tests.
+\end{itemize}
+
+\hypertarget{exemple}{%
+\subsubsection*{Exemple}\label{exemple}}
+
+Soit la variable \(a=5\) :
+
+\begin{itemize}
+\tightlist
+\item
+  \(a<3\) est \textbf{False}
+\item
+  \(a!=0\) est \textbf{True}
+\item
+  \(a>0\) and \(a<=5\) est \textbf{True}
+\item
+  \(a<0\) or \(a!=5\) est \textbf{False}
+\item
+  not(\(a==5\)) \textbf{False}
+\end{itemize}
+
+\hypertarget{structure-conditionnelle-si}{%
+\subsection{Structure conditionnelle
+SI}\label{structure-conditionnelle-si}}
+
+On peut soumettre l'exécution d'une instruction à une condition.
+
+La structure est de la forme:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{ test:}
+\NormalTok{    instructions}
+\end{Highlighting}
+\end{Shaded}
+
+Le test renvoie une valeur booléenne.
+
+\begin{itemize}
+\tightlist
+\item
+  Si la valeur du test est \textbf{True}, les instructions sont
+  exécutées;
+\item
+  Si la valeur du test est \textbf{False}, aucune instruction est
+  exécutée.
+\end{itemize}
+
+\hypertarget{exemple-1}{%
+\subsubsection*{Exemple}\label{exemple-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{ a}\OperatorTok{\textgreater{}}\DecValTok{0}\NormalTok{:}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"Le nombre saisi est positif"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{structure-conditionnelle-si-sinon}{%
+\subsection{Structure conditionnelle SI \ldots{}
+SINON}\label{structure-conditionnelle-si-sinon}}
+
+Lorsque le test de la condition \textbf{if} est à \textbf{False}, il est
+possible d'exécuter d'autres instructions. Elles sont introduites par le
+mot \textbf{else}.
+
+La structure devient :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{ test:}
+\NormalTok{    instructions}
+\ControlFlowTok{else}\NormalTok{:}
+\NormalTok{    autres instructions}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{exemple-2}{%
+\subsubsection*{Exemple}\label{exemple-2}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{ a}\OperatorTok{\textgreater{}}\DecValTok{0}\NormalTok{:}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"Le nombre saisi est positif"}\NormalTok{)}
+\ControlFlowTok{else}\NormalTok{:}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"Le nombre saisi est négatif"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{structure-conditionnelle-si-sinon-si-sinon}{%
+\subsection{Structure conditionnelle SI \ldots{} SINON SI \ldots{}
+SINON}\label{structure-conditionnelle-si-sinon-si-sinon}}
+
+La commande else \textbf{ne contient pas de test}. Il est possible de
+soumettre un nouveau test avec la commande \textbf{elif}. La structure
+est alors de la forme:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{ test }\DecValTok{1}\NormalTok{:}
+\NormalTok{    instructions}
+\ControlFlowTok{elif}\NormalTok{ test }\DecValTok{2}\NormalTok{:}
+\NormalTok{    autres instructions}
+\ControlFlowTok{elif}\NormalTok{ test }\DecValTok{3}\NormalTok{:}
+\NormalTok{    encore des instructions}
+\ControlFlowTok{else}\NormalTok{:}
+\NormalTok{    les dernières instructions}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{exemple-3}{%
+\subsubsection*{Exemple}\label{exemple-3}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{ a}\OperatorTok{\textgreater{}}\DecValTok{0}\NormalTok{:}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"Le nombre saisi est positif"}\NormalTok{)}
+\ControlFlowTok{elif}\NormalTok{ a}\OperatorTok{\textless{}}\DecValTok{0}\NormalTok{:}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"Le nombre saisi est négatif"}\NormalTok{)}
+\ControlFlowTok{else}\NormalTok{:}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"Le nombre saisi est nul"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+    
+\end{document}
